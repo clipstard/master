@@ -1,0 +1,64 @@
+<div class="main-content">
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-md-12">
+              <div class="card">
+                  <div class="card-header card-header-danger">
+                      <h4 class="card-title ">The list of Tasks</h4>
+                      <p class="card-category"> You are able to see list of tasks & manage them</p>
+                      <button mat-flat-button [routerLink]="['/', 'task']">
+                          Create task
+                      </button>
+                  </div>
+                  <div class="card-body">
+                      <div class="table-responsive">
+                          <table class="table">
+                              <thead class=" text-primary">
+                                  <th>
+                                      ID
+                                  </th>
+                                  <th>
+                                      Is public
+                                  </th>
+                                  <th>
+                                      Assigned to?
+                                  </th>
+                                  <th>
+                                      Actions
+                                  </th>
+                              </thead>
+                              <tbody>
+                                  <tr *ngFor="let task of tasks">
+                                      <td>
+                                          {{ task.id }}
+                                      </td>
+                                      <td>
+                                          {{ task.public ? 'Public' : 'Private' }}
+                                      </td>
+                                      <td>
+                                          {{ task.groups?.length ? 'Groups' : (task?.assignedTo?.length ? 'Students' : 'none') }}
+                                      </td>
+                                      <td class="text-primary">
+                                          <button mat-icon-button (click)="togglePublic(task.id)" [color]="task.public ? 'warn' : 'primary'">
+                                              <mat-icon>{{task.public ? 'public_off' : 'public'}}</mat-icon>
+                                          </button>
+                                          <button mat-icon-button [routerLink]="['/', 'professor', 'task', task.id]" [color]="'primary'">
+                                              <mat-icon>edit</mat-icon>
+                                          </button>
+                                      </td>
+                                  </tr>
+
+                                <tr *ngIf="!tasks.length">
+                                    <td colspan="5" class="text-center">
+                                        <h1>No tasks yet</h1>
+                                    </td>
+                                </tr>
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

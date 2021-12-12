@@ -15,11 +15,13 @@ declare var window: any;
 })
 export class NavbarComponent implements OnInit {
     @Input() menuItems: RouteInfo[] = [];
+    @Input() currentRoute = 'Dashboard';
+    @Input() notifications = [];
+
     isAuthenticated = false;
     isAdmin = false;
 
     mobile_menu_visible: any = 0;
-    private listTitles: any[] = [];
     private toggleButton: any;
     private sidebarVisible: boolean;
 
@@ -37,12 +39,6 @@ export class NavbarComponent implements OnInit {
         this.isAuthenticated = StorageService.isAuthenticated;
         this.isAdmin = StorageService.user?.type === UserType.Admin;
 
-        let prefix = '';
-        if (this.router.url.includes('/admin')) {
-            prefix = '/admin';
-        }
-
-        this.listTitles = this.menuItems.map(item => ({...item, path: prefix + item.path})).filter(listTitle => listTitle.displayInMenu);
         const navbar: HTMLElement = this.element.nativeElement;
         this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
         this.router.events.subscribe((event) => {
@@ -136,17 +132,5 @@ export class NavbarComponent implements OnInit {
             this.mobile_menu_visible = 1;
 
         }
-    }
-
-    getTitle() {
-        const titlee = this.location.prepareExternalUrl(this.location.path());
-
-        for (let item = 0; item < this.listTitles.length; item++) {
-            if (this.listTitles[item].path === titlee) {
-                return this.listTitles[item].title;
-            }
-        }
-
-        return 'Dashboard';
     }
 }

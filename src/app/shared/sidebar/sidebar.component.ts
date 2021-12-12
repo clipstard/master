@@ -13,6 +13,7 @@ declare const $: any;
 })
 export class SidebarComponent implements OnInit {
     @Input() menuItems: RouteInfo[] = [];
+    @Input() notifications = [];
     isAdmin = false;
 
     constructor(

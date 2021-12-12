@@ -1,0 +1,74 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="card">
+                <div class="card-header card-header-danger">
+                    <h4 class="card-title">{{editMode ? 'Edit' : 'Create'}} task</h4>
+                    <p class="card-category">Fill the form to submit a task</p>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="form" (ngSubmit)="submit()">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <mat-form-field class="example-full-width">
+                                    <mat-label>Assign to</mat-label>
+                                    <mat-select formControlName="assignType">
+                                        <mat-option *ngFor="let assignType of assignTypes" [value]="assignType.value">
+                                            {{assignType.label}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-6">
+                                <mat-form-field class="example-full-width" *ngIf="form.get('assignType').value === 'student'">
+                                    <mat-label>Students</mat-label>
+                                    <mat-select formControlName="selectedStudents" multiple>
+                                        <mat-option *ngFor="let student of students" [value]="student['@id']">
+                                            {{student.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field class="example-full-width" *ngIf="form.get('assignType').value === 'group'">
+                                    <mat-label>Groups</mat-label>
+                                    <mat-select formControlName="selectedGroups" multiple>
+                                        <mat-option *ngFor="let group of groups" [value]="group['@id']">
+                                            {{group.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-checkbox
+                                        class="example-margin"
+                                        formControlName="public"
+                                        *ngIf="form.get('assignType').value === 'unassigned'">
+                                    Check me!
+                                </mat-checkbox>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Description</label>
+                                <mat-form-field class="example-full-width">
+                                    <textarea matInput
+                                              formControlName="description"
+                                              [matTextareaAutosize]="true"
+                                              [matAutosizeMinRows]="8"
+                                              [matAutosizeMaxRows]="10"
+                                              placeholder="The description of the task">
+                                    </textarea>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <button mat-raised-button type="submit" class="btn btn-danger pull-right">
+                            Create task
+                        </button>
+                        <div class="clearfix"></div>
+                    </form>
+
+                    <div>
+                        <ngx-codemirror [(ngModel)]="sqlCode" [options]="codemirrorOptions"></ngx-codemirror>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

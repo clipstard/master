@@ -7,6 +7,7 @@ const routes: Routes = [
 
     { path: '', loadChildren: () => import('./public/public.module').then(m => m.PublicModule)},
     { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)},
+    { path: 'professor', loadChildren: () => import('./professor/professor.module').then(m => m.ProfessorModule)},
     {
         path: '**',
         redirectTo: 'login',

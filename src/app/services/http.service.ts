@@ -15,9 +15,6 @@ export interface HttpOptions {
 @Injectable()
 export class HttpService {
 
-    public static authenticatedUser;
-    public static token;
-
     protected static prepareUrl(url: string) {
         if (url.startsWith('/')) {
             return environment.host + url;
@@ -59,7 +56,15 @@ export class HttpService {
     }
 
     public post(url: string, data: any = {}, options: HttpOptions = {}): Observable<any> {
-        return this.http.post(HttpService.prepareUrl(url), data, options).pipe(
+        const withCredentials = options.withCredentials === undefined || options.withCredentials;
+        const headers = options.headers || new HttpHeaders();
+        headers.append('Content-Type', 'application/json');
+        return this.http.post(HttpService.prepareUrl(url), data, {
+            ...options,
+            withCredentials,
+            headers,
+            responseType: 'json',
+        }).pipe(
             switchMap((response: any) => {
                 return HttpService.parseSuccessResponse(response);
             }),
@@ -68,7 +73,15 @@ export class HttpService {
     }
 
     public put(url: string, data: any, options: HttpOptions = {}): Observable<any> {
-        return this.http.put(HttpService.prepareUrl(url), data, options).pipe(
+        const withCredentials = options.withCredentials === undefined || options.withCredentials;
+        const headers = options.headers || new HttpHeaders();
+        headers.append('Content-Type', 'application/json');
+        return this.http.put(HttpService.prepareUrl(url), data, {
+            ...options,
+            withCredentials,
+            headers,
+            responseType: 'json',
+        }).pipe(
             switchMap((response: any) => {
                 return HttpService.parseSuccessResponse(response);
             }),
@@ -77,7 +90,16 @@ export class HttpService {
     }
 
     public delete(url: string, data: any = {}, options: HttpOptions = {}): Observable<any> {
-        return this.http.delete(HttpService.prepareUrl(url), { params: QueryHelper.getHttpParams(data), ...options }).pipe(
+        const withCredentials = options.withCredentials === undefined || options.withCredentials;
+        const headers = options.headers || new HttpHeaders();
+        headers.append('Content-Type', 'application/json');
+        return this.http.delete(HttpService.prepareUrl(url), {
+            params: QueryHelper.getHttpParams(data),
+            ...options,
+            withCredentials,
+            headers,
+            responseType: 'json',
+        }).pipe(
             switchMap((response: any) => {
                 return HttpService.parseSuccessResponse(response);
             }),
