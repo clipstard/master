@@ -1,0 +1,23 @@
+
+:host {
+    .main-content {
+        height: 100vh;
+        overflow-y: hidden;
+
+        display: flex;
+        margin: auto;
+    }
+
+    .mv-auto {
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+
+    .position-center {
+        display: flex;
+        justify-content: center;
+        justify-items: center;
+    }
+
+}
+
