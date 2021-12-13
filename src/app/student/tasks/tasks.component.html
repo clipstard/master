@@ -5,10 +5,7 @@
               <div class="card">
                   <div class="card-header card-header-danger">
                       <h4 class="card-title ">The list of Tasks</h4>
-                      <p class="card-category"> You are able to see list of tasks & manage them</p>
-                      <button mat-flat-button [routerLink]="['/', 'professor', 'task']">
-                          Create task
-                      </button>
+                      <p class="card-category"> You are able to see list of tasks & complete them</p>
                   </div>
                   <div class="card-body">
                       <div class="table-responsive">
@@ -39,11 +36,8 @@
                                           {{ task.groups?.length ? 'Groups' : (task?.assignedTo?.length ? 'Students' : 'none') }}
                                       </td>
                                       <td class="text-primary">
-                                          <button mat-icon-button (click)="togglePublic(task.id)" [color]="task.public ? 'warn' : 'primary'">
-                                              <mat-icon>{{task.public ? 'public_off' : 'public'}}</mat-icon>
-                                          </button>
-                                          <button mat-icon-button [routerLink]="['/', 'professor', 'task', task.id]" [color]="'primary'">
-                                              <mat-icon>edit</mat-icon>
+                                          <button mat-icon-button [routerLink]="['/', 'student', 'task', task.id]" [color]="'primary'">
+                                              <mat-icon>fact_check</mat-icon>
                                           </button>
                                       </td>
                                   </tr>

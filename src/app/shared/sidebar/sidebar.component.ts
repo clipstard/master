@@ -23,12 +23,7 @@ export class SidebarComponent implements OnInit {
 
     ngOnInit() {
         this.isAdmin = StorageService.user?.type === UserType.Admin;
-        let prefix = '';
-        if (this.router.url.includes('/admin')) {
-            prefix = '/admin';
-        }
-
-        this.menuItems = this.menuItems.map(item => ({...item, path: prefix + item.path})).filter(menuItem => menuItem.displayInMenu);
+        this.menuItems = this.menuItems.map(item => ({...item})).filter(menuItem => menuItem.displayInMenu);
     }
 
     isMobileMenu() {

@@ -1,0 +1,53 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="card">
+                <div class="card-header card-header-danger">
+                    <h4 class="card-title">Complete task</h4>
+                    <p class="card-category">Fill the form to complete a task</p>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="form" (ngSubmit)="submit()">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <mat-form-field class="example-full-width">
+                                    <mat-label>Created by</mat-label>
+                                    <mat-select formControlName="assignType" [disabled]="true">
+                                        <mat-option [value]="'unassigned'">
+                                            Professor
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Description</label>
+                                <mat-form-field class="example-full-width">
+                                    <textarea matInput
+                                              formControlName="description"
+                                              [readonly]="true"
+                                              [disabled]="true"
+                                              [matTextareaAutosize]="true"
+                                              [matAutosizeMinRows]="8"
+                                              [matAutosizeMaxRows]="10"
+                                              placeholder="The description of the task">
+                                    </textarea>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+                    </form>
+
+                    <div>
+                        <ngx-codemirror [(ngModel)]="sqlCode" [options]="codemirrorOptions"></ngx-codemirror>
+                    </div>
+                </div>
+                <button mat-raised-button type="button" (click)="submit()" class="btn btn-danger pull-right">
+                    Submit Solution
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

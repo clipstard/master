@@ -4,11 +4,8 @@
           <div class="col-md-12">
               <div class="card">
                   <div class="card-header card-header-danger">
-                      <h4 class="card-title ">The list of Tasks</h4>
-                      <p class="card-category"> You are able to see list of tasks & manage them</p>
-                      <button mat-flat-button [routerLink]="['/', 'professor', 'task']">
-                          Create task
-                      </button>
+                      <h4 class="card-title ">The list of Professors</h4>
+                      <p class="card-category"> You are able to see list of professors & delete them if need</p>
                   </div>
                   <div class="card-body">
                       <div class="table-responsive">
@@ -18,41 +15,45 @@
                                       ID
                                   </th>
                                   <th>
-                                      Is public
+                                      Name
                                   </th>
                                   <th>
-                                      Assigned to?
+                                      Email
+                                  </th>
+                                  <th>
+                                      Nr of tasks
                                   </th>
                                   <th>
                                       Actions
                                   </th>
                               </thead>
                               <tbody>
-                                  <tr *ngFor="let task of tasks">
+                                  <tr *ngFor="let professor of professors">
                                       <td>
-                                          {{ task.id }}
+                                          {{ professor.id }}
                                       </td>
                                       <td>
-                                          {{ task.public ? 'Public' : 'Private' }}
+                                          {{ professor.name }}
                                       </td>
                                       <td>
-                                          {{ task.groups?.length ? 'Groups' : (task?.assignedTo?.length ? 'Students' : 'none') }}
+                                          {{ professor.email }}
+                                      </td>
+                                      <td>
+                                          {{ professor.tasks?.length }}
                                       </td>
                                       <td class="text-primary">
-                                          <button mat-icon-button (click)="togglePublic(task.id)" [color]="task.public ? 'warn' : 'primary'">
-                                              <mat-icon>{{task.public ? 'public_off' : 'public'}}</mat-icon>
-                                          </button>
-                                          <button mat-icon-button [routerLink]="['/', 'professor', 'task', task.id]" [color]="'primary'">
-                                              <mat-icon>edit</mat-icon>
+                                          <button mat-icon-button (click)="deleteProfessor(professor.id)" [color]="'warn'">
+                                              <mat-icon>delete</mat-icon>
                                           </button>
                                       </td>
                                   </tr>
 
-                                <tr *ngIf="!tasks.length">
+                                <tr *ngIf="!professors.length">
                                     <td colspan="5" class="text-center">
-                                        <h1>No tasks yet</h1>
+                                        <h1>No content to display</h1>
                                     </td>
                                 </tr>
+
                               </tbody>
                           </table>
                       </div>

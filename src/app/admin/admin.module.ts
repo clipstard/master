@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AdminRoutes } from './admin.routing';
-import { AdminComponent } from './admin.component';
+import { AdminWrapperComponent } from './admin-wrapper.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -30,7 +30,7 @@ import { StudentsComponent } from '@app/admin/students/students.component';
         SharedModule,
     ],
     declarations: [
-        AdminComponent,
+        AdminWrapperComponent,
         ProfessorsComponent,
         StudentsComponent,
     ],

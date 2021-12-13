@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ProfessorWrapperComponent } from './professor-wrapper.component';
+import { StudentWrapperComponent } from './student-wrapper.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -10,19 +10,17 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { SharedModule } from '@shared/shared.module';
-import { ProfessorRoutes } from '@app/professor/professor.routing';
-import { ProfessorsComponent } from '@app/professor/professors/professors.component';
-import { StudentsComponent } from '@app/professor/students/students.component';
-import { CreateTaskComponent } from '@app/professor/create-task/create-task.component';
+import { CreateTaskComponent } from '@app/student/create-task/create-task.component';
 import { CodemirrorModule } from '@ctrl/ngx-codemirror';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { TasksComponent } from '@app/professor/tasks/tasks.component';
+import { TasksComponent } from '@app/student/tasks/tasks.component';
+import { StudentRoutes } from '@app/student/student.routing';
 
 
 @NgModule({
     imports: [
-        RouterModule.forChild(ProfessorRoutes),
+        RouterModule.forChild(StudentRoutes),
         RouterModule,
         MatButtonModule,
         MatRippleModule,
@@ -39,13 +37,11 @@ import { TasksComponent } from '@app/professor/tasks/tasks.component';
         MatCheckboxModule,
     ],
     declarations: [
-        ProfessorWrapperComponent,
-        ProfessorsComponent,
-        StudentsComponent,
+        StudentWrapperComponent,
         CreateTaskComponent,
         TasksComponent,
     ],
 })
 
-export class ProfessorModule {
+export class StudentModule {
 }

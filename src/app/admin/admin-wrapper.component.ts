@@ -1,27 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import * as $ from 'jquery';
 import { buildRoute, RouteInfo } from '../../misc';
-import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { NavigationEnd, Router } from '@angular/router';
 
 
 @Component({
-    selector: 'app-professor',
-    templateUrl: './professor.component.html',
-    styleUrls: ['./professor.component.scss'],
+    selector: 'app-admin-wrapper',
+    templateUrl: './admin-wrapper.component.html',
+    styleUrls: ['./admin-wrapper.component.scss'],
 })
-export class ProfessorComponent implements OnInit {
+export class AdminWrapperComponent implements OnInit {
 
     currentRoute = 'Dashboard';
+    notifications =  [];
 
     menuItems: RouteInfo[] = [
-        buildRoute({ path: '/professor/dashboard', title: 'Dashboard', icon: 'dashboard' }),
-        buildRoute({ path: '/professor/tasks', title: 'Tasks', icon: 'task', displayInMenu: true }),
-    ];
-
-    notifications = [
-        'Task 12 was assigned to you',
-        'Task 13 was assigned to you',
+        buildRoute({ path: 'dashboard', title: 'Dashboard', icon: 'dashboard' }),
+        buildRoute({ path: 'professors', title: 'Professors', icon: 'perm_contact_cal', displayInMenu: true }),
+        buildRoute({ path: 'students', title: 'Students', icon: 'school' }),
     ];
 
     fixedMenuOpened = false;

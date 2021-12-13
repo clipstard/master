@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { ProfessorComponent } from './professor.component';
+import { ProfessorWrapperComponent } from './professor-wrapper.component';
 import { DashboardComponent } from '@shared/dashboard/dashboard.component';
 import { IsAuthenticatedGuard } from '@app/guards/is-authenticated.guard';
 import { ProfessorsComponent } from '@app/admin/professors/professors.component';
@@ -10,7 +10,7 @@ import { TasksComponent } from '@app/professor/tasks/tasks.component';
 export const ProfessorRoutes: Routes = [
     {
         path: '',
-        component: ProfessorComponent,
+        component: ProfessorWrapperComponent,
         canActivate: [IsAuthenticatedGuard],
         children: [
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },

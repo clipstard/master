@@ -1,24 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import * as $ from 'jquery';
 import { buildRoute, RouteInfo } from '../../misc';
-import { filter } from 'rxjs/operators';
 import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 
 @Component({
-    selector: 'app-admin',
-    templateUrl: './admin.component.html',
-    styleUrls: ['./admin.component.scss'],
+    selector: 'app-student-wrapper',
+    templateUrl: './student-wrapper.component.html',
+    styleUrls: ['./student-wrapper.component.scss'],
 })
-export class AdminComponent implements OnInit {
+export class StudentWrapperComponent implements OnInit {
 
     currentRoute = 'Dashboard';
 
     menuItems: RouteInfo[] = [
-        buildRoute({ path: '/admin/dashboard', title: 'Dashboard', icon: 'dashboard' }),
-        buildRoute({ path: '/admin/professors', title: 'Professors', icon: 'perm_contact_cal', displayInMenu: true }),
-        buildRoute({ path: '/admin/students', title: 'Students', icon: 'school' }),
-        buildRoute({ path: '/admin/tasks', title: 'Tasks', icon: 'task' }),
+        buildRoute({ path: '/student/dashboard', title: 'Tasks', icon: 'task', displayInMenu: true }),
+    ];
+
+    notifications = [
+        'Task 12 was assigned to you',
+        'Task 13 was assigned to you',
     ];
 
     fixedMenuOpened = false;
@@ -39,7 +41,7 @@ export class AdminComponent implements OnInit {
             } else if (url.includes('students')) {
                 this.currentRoute = 'Students list';
             } else {
-                this.currentRoute = 'Dashboard';
+                this.currentRoute = 'Task List';
             }
         });
     }
