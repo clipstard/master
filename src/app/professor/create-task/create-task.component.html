@@ -7,7 +7,7 @@
                     <p class="card-category">Fill the form to submit a task</p>
                 </div>
                 <div class="card-body">
-                    <form [formGroup]="form" (ngSubmit)="submit()">
+                    <form [formGroup]="form">
                         <div class="row">
                             <div class="col-md-6">
                                 <mat-form-field class="example-full-width">
@@ -58,7 +58,7 @@
                                 </mat-form-field>
                             </div>
                         </div>
-                        <button mat-raised-button type="submit" class="btn btn-danger pull-right">
+                        <button mat-raised-button type="button" class="btn btn-danger pull-right" (click)="submit()">
                             Create task
                         </button>
                         <div class="clearfix"></div>

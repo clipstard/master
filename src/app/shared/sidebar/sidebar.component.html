@@ -15,14 +15,17 @@
                     <i class="material-icons">notifications</i>
                     <p>
                         <span class="d-lg-none d-md-block">
-                            <span class="notification" *ngIf="notifications.length">{{notifications.length}}</span>
+                            <span class="notification" *ngIf="unreadNotifications as nr">{{nr}}</span>
                             Unread Notifications
                         </span>
                     </p>
 
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="javascript:void(0)" *ngFor="let notification of notifications">{{notification}}</a>
+                    <a class="dropdown-item notification-item" href="javascript:void(0)" (click)="read(notification)" *ngFor="let notification of notifications | slice: 0: 5">
+                        {{notification.name}}
+                        <div class="read-notification" *ngIf="!notification.read"></div>
+                    </a>
                 </div>
             </li>
             <li class="nav-item">

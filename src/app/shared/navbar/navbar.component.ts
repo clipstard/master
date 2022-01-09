@@ -5,18 +5,19 @@ import { RouteInfo } from '@src/misc';
 import { StorageService } from '@app/services/storage.service';
 import { UserService } from '@app/services/user.service';
 import { UserType } from '@enums/user.type';
+import { NotificationInterface } from '@interfaces/notificationInterface';
 
 declare var window: any;
 
 @Component({
     selector: 'app-navbar',
     templateUrl: './navbar.component.html',
-    styleUrls: ['./navbar.component.css'],
+    styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
     @Input() menuItems: RouteInfo[] = [];
     @Input() currentRoute = 'Dashboard';
-    @Input() notifications = [];
+    @Input() notifications: NotificationInterface[] = [];
 
     isAuthenticated = false;
     isAdmin = false;
@@ -51,8 +52,16 @@ export class NavbarComponent implements OnInit {
         });
     }
 
+    read(notification: NotificationInterface) {
+        this.userService.readNotification(notification.id).subscribe();
+    }
+
     logout() {
         this.userService.logout();
+    }
+
+    get unreadNotifications() {
+        return this.notifications.filter((e) => !e.read).length;
     }
 
     sidebarOpen() {

@@ -36,7 +36,7 @@
                                           {{ task.groups?.length ? 'Groups' : (task?.assignedTo?.length ? 'Students' : 'none') }}
                                       </td>
                                       <td class="text-primary">
-                                          <button mat-icon-button [routerLink]="['/', 'student', 'task', task.id]" [color]="'primary'">
+                                          <button mat-icon-button [routerLink]="['/', 'student', 'task', task.id]" [color]="'primary'" [disabled]="task.completed">
                                               <mat-icon>fact_check</mat-icon>
                                           </button>
                                       </td>

@@ -106,19 +106,13 @@ export class CreateTaskComponent implements OnInit {
             public: !!value.public,
             assignedTo: value.selectedStudents,
             groups: value.selectedGroups,
-            condition: value.description,
+            condition: this.sqlCode,
             id: this.id,
         }).subscribe(() => this.router.navigate(['tasks']));
     }
 
     createTask() {
         console.log(this.form.value);
-    }
-
-    refreshStudents() {
-        this.httpService.get('students').pipe(pluck('hydra:member')).subscribe((result) => {
-            this.students = result;
-        });
     }
 
     refreshGroups() {

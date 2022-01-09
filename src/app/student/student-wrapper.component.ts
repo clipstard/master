@@ -2,7 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import * as $ from 'jquery';
 import { buildRoute, RouteInfo } from '../../misc';
 import { NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { filter, startWith, switchMap } from 'rxjs/operators';
+import { interval } from 'rxjs';
+import { UserService } from '../services/user.service';
+import { NotificationInterface } from '../../interfaces/notificationInterface';
+import { SpinnerService } from '../services/spinner.service';
 
 
 @Component({
@@ -12,22 +16,23 @@ import { filter } from 'rxjs/operators';
 })
 export class StudentWrapperComponent implements OnInit {
 
+    firstLoad = true;
     currentRoute = 'Dashboard';
+    audio = new Audio('/assets/notification.mp3');
 
     menuItems: RouteInfo[] = [
         buildRoute({ path: '/student/dashboard', title: 'Tasks', icon: 'task', displayInMenu: true }),
     ];
 
-    notifications = [
-        'Task 12 was assigned to you',
-        'Task 13 was assigned to you',
-    ];
+    notifications: NotificationInterface[] = [];
 
     fixedMenuOpened = false;
 
     constructor(
         private router: Router,
+        private userService: UserService,
     ) {
+        this.audio.load();
         this.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe(() => {
             const url = this.router.url;
             if (url.includes('tasks')) {
@@ -47,72 +52,24 @@ export class StudentWrapperComponent implements OnInit {
     }
 
     ngOnInit() {
-        const window_width = $(window).width();
-        const $sidebar = $('.sidebar');
-        const $sidebar_responsive = $('body > .navbar-collapse');
-        const $sidebar_img_container = $sidebar.find('.sidebar-background');
+        this.subscribeToNotifications();
+        SpinnerService.bindJquery($);
+    }
 
+    subscribeToNotifications() {
+        interval(3000).pipe(
+            startWith(1),
+            switchMap(() => this.userService.getNotifications())
+        ).subscribe((result) => {
+            if (!UserService.arrayDiff(result, this.notifications)) {
+                this.notifications = result;
 
-        if (window_width > 767) {
-            if ($('.fixed-plugin .dropdown').hasClass('show-dropdown')) {
-                $('.fixed-plugin .dropdown').addClass('open');
-            }
-
-        }
-
-        $('.fixed-plugin a').click(function (event) {
-            if ($(this).hasClass('switch-trigger')) {
-                if (event.stopPropagation) {
-                    event.stopPropagation();
-                } else if (window.event) {
-                    window.event.cancelBubble = true;
+                if (!this.firstLoad && this.notifications.some(e => !e.read)) {
+                    this.audio.play();
                 }
-            }
-        });
 
-        $('.fixed-plugin .badge').click(function () {
-            $(this).siblings().removeClass('active');
-            $(this).addClass('active');
-
-            const new_color = $(this).data('color');
-
-            if ($sidebar.length !== 0) {
-                $sidebar.attr('data-color', new_color);
-            }
-
-            if ($sidebar_responsive.length !== 0) {
-                $sidebar_responsive.attr('data-color', new_color);
-            }
-        });
-
-        $('.fixed-plugin .img-holder').click(function () {
-            const $full_page_background = $('.full-page-background');
-
-            $(this).parent('li').siblings().removeClass('active');
-            $(this).parent('li').addClass('active');
-
-
-            const new_image = $(this).find('img').attr('src');
-
-            if ($sidebar_img_container.length !== 0) {
-                $sidebar_img_container.fadeOut('fast', function () {
-                    $sidebar_img_container.css('background-image', 'url("' + new_image + '")');
-                    $sidebar_img_container.fadeIn('fast');
-                });
-            }
-
-            if ($full_page_background.length !== 0) {
-
-                $full_page_background.fadeOut('fast', function () {
-                    $full_page_background.css('background-image', 'url("' + new_image + '")');
-                    $full_page_background.fadeIn('fast');
-                });
-            }
-
-            if ($sidebar_responsive.length !== 0) {
-                $sidebar_responsive.css('background-image', 'url("' + new_image + '")');
+                this.firstLoad = false;
             }
         });
     }
-
 }

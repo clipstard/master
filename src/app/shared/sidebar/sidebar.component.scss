@@ -1,0 +1,20 @@
+.notification {
+    font-weight: bold;
+}
+
+:host {
+    .notification-item {
+        position: relative;
+    }
+
+    .read-notification {
+        position: absolute;
+        right: 20px;
+        content: '';
+        top: 15px;
+        background-color: #00c853;
+        border-radius: 50%;
+        width: 10px;
+        height: 10px;
+    }
+}

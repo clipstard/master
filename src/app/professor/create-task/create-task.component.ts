@@ -121,7 +121,14 @@ export class CreateTaskComponent implements OnInit {
     }
 
     createTask() {
-        console.log(this.form.value);
+        const value = this.form.value;
+        this.httpService.post(`tasks`, {
+            public: !!value.public,
+            assignedTo: value.selectedStudents,
+            groups: value.selectedGroups,
+            condition: value.description,
+            id: this.id,
+        }).subscribe(() => this.router.navigate(['tasks']));
     }
 
     refreshStudents() {

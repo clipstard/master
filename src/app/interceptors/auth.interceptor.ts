@@ -10,6 +10,7 @@ import { SpinnerService } from '@app/services/spinner.service';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
+
     constructor(
         private httpService: HttpService,
         private storageService: StorageService,
@@ -19,7 +20,14 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
-        this.spinnerService.show();
+        let withLoader = true;
+        if (req.url.includes('notifications')) {
+            withLoader = false;
+        }
+
+        if (withLoader) {
+            this.spinnerService.show();
+        }
 
         if (req.withCredentials !== undefined && req.withCredentials) {
             return next.handle(this.addAuthenticationToken(req)).pipe(
@@ -34,12 +42,18 @@ export class AuthInterceptor implements HttpInterceptor {
 
                     return throwError(err);
                 }),
-                tap(() => this.spinnerService.hide()),
+                tap(() => {
+                    if (withLoader) {
+                        this.spinnerService.hide();
+                    }
+                }),
             );
         }
 
         return next.handle(req).pipe(
-            tap(() => this.spinnerService.hide()),
+            tap(() => {
+                if (withLoader) { this.spinnerService.hide(); }
+            }),
         );
     }
 
